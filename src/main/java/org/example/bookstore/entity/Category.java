@@ -36,4 +36,9 @@ public class Category {
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
     private List<Book> books = new ArrayList<>();
+
+    public Category(long id, String categoryName) {
+        this.id = id;
+        this.categoryName = categoryName;
+    }
 }

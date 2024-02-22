@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CategoryService {
@@ -20,7 +21,12 @@ public class CategoryService {
 
     public List<Category> getAllCategory() {
 
-        return categoryRepository.findAll();
+        return categoryRepository.findAll().stream()
+                .map(category -> {
+                    Category categoryWithoutBooks =new Category(category.getId(),category.getCategoryName());
+                    return categoryWithoutBooks;
+                })
+                .collect(Collectors.toList());
     }
     public Category findById(long id){
         return categoryRepository.findById(id).get();
