@@ -1,21 +1,21 @@
-    Entities:
-        There are entities like Book, Category, Items, Request, and User, representing various entities in the bookstore domain.
+    Book and Category Management:
+        Implemented CRUD operations for books and categories, enabling seamless addition, retrieval, update, and deletion of book records.
+        Utilized Spring Data JPA repositories for efficient database interaction and management.
 
-    Repositories:
-        Repositories like BookRepo, CategoryRepo, and ClientRepo provide CRUD (Create, Read, Update, Delete) operations for their respective entities using Spring Data JPA.
+    User Authentication and Authorization:
+        Integrated Spring Security to enforce role-based access control, distinguishing between regular users and administrators.
+        Configured security rules to permit browsing of books for all users, while restricting purchase functionality to administrators only.
 
-    Services:
-        Service classes like BookService, CategoryService, and PurchaseServiceImpl contain business logic for operations related to books, categories, and purchase requests respectively. They interact with repositories to perform CRUD operations and other business logic.
-
-    DTOs (Data Transfer Objects):
-        PurchaseRequest and PurchaseResponse are used for transferring data related to purchase requests between the client and server.
+    Purchase Request Handling:
+        Designed a streamlined process for handling purchase requests, allowing users to submit requests for books.
+        Implemented purchase request processing logic, ensuring secure and efficient handling of client requests.
 
     Exception Handling:
-        ApiRequestException and ApiException classes handle exceptions and provide a structured response format for API errors. ApiExceptionHandler is a controller advice class that handles ApiRequestException globally and returns a standardized error response.
+        Implemented a robust exception handling mechanism to provide informative error messages and maintain system reliability.
+        Utilized controller advice to globally handle exceptions and return standardized error responses.
 
-    Security Configuration:
-        SpringSecurity class configures security settings for the application. It defines security rules for different endpoints, enables CORS (Cross-Origin Resource Sharing) support, disables CSRF (Cross-Site Request Forgery) protection, and sets up basic form-based and HTTP Basic authentication.
-        UserDetailService is a custom implementation of UserDetailsService interface, used for loading user-specific data during authentication. It retrieves user details from the database and provides an implementation of UserDetails interface, which Spring Security uses for authentication and authorization.
+    Password Security:
+        Employed BCryptPasswordEncoder for secure password hashing and storage, ensuring data confidentiality and integrity.
 
-    PasswordEncoder:
-        BCryptPasswordEncoder is used for encoding passwords securely. It hashes passwords before storing them in the database and verifies hashed passwords during authentication.
+    RESTful API Design:
+        Developed a RESTful API to expose bookstore functionalities, enabling seamless integration with frontend applications or other services.
