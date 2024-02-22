@@ -75,10 +75,8 @@ public class BookService {
         if (listOfBook.isEmpty())
         {
             throw new ApiRequestException("Not Found");
-        }else
-        {
-            return listOfBook;
         }
+        return listOfBook;
     }
 
 
