@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.example.bookstore.entity.Book;
 import org.example.bookstore.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,57 +20,59 @@ public class BookController {
 
 
     @GetMapping("findAllBook")
-    public List<Book> findAll()
+    public ResponseEntity<List<Book>> findAll()
     {
-        return bookService.findAll();
+        List<Book> books=bookService.findAll();
+        return new ResponseEntity<>(books, HttpStatus.OK);
     }
 
     @GetMapping("findBookByID{id}")
-    public Book findByID(@PathVariable long id)
+    public ResponseEntity<Book> findByID(@PathVariable long id)
     {
-        return bookService.findByID(id);
+        Book book=bookService.findByID(id);
+        return new ResponseEntity<>(book,HttpStatus.OK);
     }
 
     @DeleteMapping("removeBookById{id}")
-    public String removeBook(@PathVariable Long id)
+    public ResponseEntity<Void> removeBook(@PathVariable Long id)
     {
          bookService.removeBook(id);
-         return "Done ;)";
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("findNumberOfBOOKByCategoryId{id}")
-    public long findNumberOfBOOKByCategoryId(@PathVariable long id)
+    public ResponseEntity<Long> findNumberOfBOOKByCategoryId(@PathVariable long id)
     {
-        return bookService.findNumberOfBOOKByCategoryId(id);
+        return ResponseEntity.ok(bookService.findNumberOfBOOKByCategoryId(id));
     }
 
     @GetMapping("findBookByName")
-    public List<Book> findBookByName(@RequestParam String name)
+    public ResponseEntity<List<Book>> findBookByName(@RequestParam String name)
     {
-        return bookService.findBookByName(name);
+        return ResponseEntity.ok(bookService.findBookByName(name));
     }
 
     @GetMapping("findNumberOfBooksByName")
-    public long findNumberOfBooksByName(@RequestParam String name)
+    public ResponseEntity<Long> findNumberOfBooksByName(@RequestParam String name)
     {
-        return bookService.findNumberOfBooksByName(name);
+        return ResponseEntity.ok(bookService.findNumberOfBooksByName(name));
     }
 
     @PostMapping("addBook")
-    public Book addBook(@Validated @RequestBody Book book)
+    public ResponseEntity<Book> addBook(@Validated @RequestBody Book book)
     {
-        return bookService.addBook(book);
+        return ResponseEntity.status(HttpStatus.CREATED).body(bookService.addBook(book));
     }
 
     @GetMapping("sizeOfAllBook")
-    public long sizeOfAllBook()
+    public ResponseEntity<Long> sizeOfAllBook()
     {
-        return bookService.sizeOfAllBook();
+        return ResponseEntity.ok(bookService.sizeOfAllBook());
     }
 
     @GetMapping("findBookByPrice")
-    public List<Book>  findBookByPrice(@RequestParam int price)
+    public ResponseEntity<List<Book> > findBookByPrice(@RequestParam int price)
     {
-        return bookService.findBookByPrice(price);
+        return ResponseEntity.ok(bookService.findBookByPrice(price));
     }
 }

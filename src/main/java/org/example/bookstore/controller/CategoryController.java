@@ -3,6 +3,8 @@ package org.example.bookstore.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.bookstore.entity.Category;
 import org.example.bookstore.service.CategoryService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,34 +21,41 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping("allCategory") //localhost:9090/api/allCategory
-    public List<Category> getAllCategories() {
-        return categoryService.getAllCategory();
+    public ResponseEntity<List<Category>> getAllCategories() {
+        List<Category> categories=categoryService.getAllCategory();
+        return new ResponseEntity<>(categories, HttpStatus.OK);
     }
     @GetMapping("findCategory{id}") //localhost:9090/api/findCategory
-    public Category findCategory(@PathVariable long id) {
-        return categoryService.findById(id);
+    public ResponseEntity<Category> findCategory(@PathVariable long id) {
+        Category categories=categoryService.findById(id);
+
+        return new ResponseEntity<>(categories,HttpStatus.OK);
     }
     @PostMapping("addCategory") //localhost:9090/api/addCategory
-    public Category addCategory(@Validated @RequestBody Category category){
-        return categoryService.addCategory(category);
+    public ResponseEntity<Category> addCategory(@Validated @RequestBody Category category){
+        Category newCategory =categoryService.addCategory(category);
+        return new ResponseEntity<>(newCategory,HttpStatus.CREATED);
     }
 
     @DeleteMapping("deleteCategory{id}") //localhost:9090/api/deleteCategory
-    public String deleteCategory(@PathVariable long id) {  //
+    public ResponseEntity<String> deleteCategory(@PathVariable long id) {  //
          categoryService.deleteCategory(id);
-         return "Category deleted";
+         return ResponseEntity.ok("Category deleted");
     }
 
     @PutMapping("updateCategory{id}")
-    public Category updateCategory(@PathVariable long id,@Validated @RequestBody Category updatedCategory)
+    public ResponseEntity<Category> updateCategory(@PathVariable long id,@Validated @RequestBody Category updatedCategory)
     {
-        return categoryService.updateCategory(id,updatedCategory);
+        Category category=categoryService.updateCategory(id,updatedCategory);
+
+        return new ResponseEntity<>(category,HttpStatus.OK);
     }
 
     @GetMapping("searchCategory")
-    public List<Category> searchCategory(@RequestParam String name)
+    public ResponseEntity<List<Category>> searchCategory(@RequestParam String name)
     {
-        return categoryService.searchCategory(name);
+        List<Category> categories=categoryService.searchCategory(name);
+        return new ResponseEntity<>(categories,HttpStatus.OK);
     }
 
 }
