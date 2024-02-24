@@ -1,5 +1,6 @@
 package org.example.bookstore.service;
 
+import lombok.RequiredArgsConstructor;
 import org.example.bookstore.dao.BookRepo;
 import org.example.bookstore.entity.Book;
 import org.example.bookstore.exception.ApiRequestException;
@@ -11,15 +12,11 @@ import java.util.Optional;
 
 
 @Service
+@RequiredArgsConstructor
 public class BookService {
 
 
     private final BookRepo bookRepo;
-
-    @Autowired
-    public BookService(BookRepo bookRepo) {
-        this.bookRepo = bookRepo;
-    }
 
     public List<Book> findAll()
     {

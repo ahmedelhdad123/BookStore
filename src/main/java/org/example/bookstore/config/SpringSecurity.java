@@ -18,8 +18,7 @@ public class SpringSecurity {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception{
         httpSecurity.authorizeHttpRequests((authorize) -> {
             authorize.requestMatchers("api/buy/**").hasRole("USER")
-                    .requestMatchers("api/addBook").hasRole("ADMIN")
-                    .requestMatchers("api/addCategory").hasRole("ADMIN")
+                    .requestMatchers("api/addBook","api/addCategory").hasRole("ADMIN")
                     .anyRequest().permitAll();
 
         });
@@ -30,10 +29,6 @@ public class SpringSecurity {
         return httpSecurity.build();
     }
 
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return NoOpPasswordEncoder.getInstance();
-//    }
     @Bean
     public PasswordEncoder passwordEncoder()
     {

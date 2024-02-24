@@ -1,21 +1,20 @@
 package org.example.bookstore.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.example.bookstore.entity.Book;
 import org.example.bookstore.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("api/")
+@RequiredArgsConstructor
 public class BookController {
     private final BookService bookService;
 
-    @Autowired
-    public BookController(BookService bookService) {
-        this.bookService = bookService;
-    }
 
 
     @GetMapping("findAllBook")
@@ -24,21 +23,21 @@ public class BookController {
         return bookService.findAll();
     }
 
-    @GetMapping("findBookByID")
-    public Book findByID(@RequestParam long id)
+    @GetMapping("findBookByID{id}")
+    public Book findByID(@PathVariable long id)
     {
         return bookService.findByID(id);
     }
 
-    @DeleteMapping("removeBookById")
-    public String removeBook(@RequestParam Long id)
+    @DeleteMapping("removeBookById{id}")
+    public String removeBook(@PathVariable Long id)
     {
          bookService.removeBook(id);
          return "Done ;)";
     }
 
-    @GetMapping("findNumberOfBOOKByCategoryId")
-    public long findNumberOfBOOKByCategoryId(@RequestParam long id)
+    @GetMapping("findNumberOfBOOKByCategoryId{id}")
+    public long findNumberOfBOOKByCategoryId(@PathVariable long id)
     {
         return bookService.findNumberOfBOOKByCategoryId(id);
     }
@@ -56,7 +55,7 @@ public class BookController {
     }
 
     @PostMapping("addBook")
-    public Book addBook(@RequestBody Book book)
+    public Book addBook(@Validated @RequestBody Book book)
     {
         return bookService.addBook(book);
     }

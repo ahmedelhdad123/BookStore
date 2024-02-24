@@ -3,6 +3,7 @@ package org.example.bookstore.service;
 import org.example.bookstore.dao.ClientRepo;
 import org.example.bookstore.dto.PurchaseRequest;
 import org.example.bookstore.dto.PurchaseResponse;
+import org.example.bookstore.entity.Client;
 import org.example.bookstore.entity.Items;
 import org.example.bookstore.entity.Request;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +37,12 @@ public class PurchaseServiceImpl implements PurchaseService{
 
         purchaseRequest.getClient().addRequest(request);
 
+        Client client = purchaseRequest.getClient();
+        client.addRequest(request);
+
         clientRepo.save(purchaseRequest.getClient());
 
-        return new PurchaseResponse(purchaseRequest.getClient().getFullName(),code);
+        return new PurchaseResponse(client.getFullName(),code);
     }
 
     private String getCode() {
